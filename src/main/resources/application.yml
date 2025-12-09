@@ -1,6 +1,30 @@
 #
 # application.yml — главный конфигурационный файл Spring Boot.
 
+spring:
+  liquibase:
+    change-log: classpath:db/migration/db.changelog-master.yaml
+    enabled: true
+    clear-checksums: false
+  datasource:
+    url: jdbc:postgresql://localhost:5432/bank_rest
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: postgres
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui.html
+server:
+  port: 0
+jwt:
+  secret: defaultSecret
+  expiration: 86400
+
 Что нужно сделать:
   - Указать настройки подключения к базе данных.
   - Указать порт приложения.
