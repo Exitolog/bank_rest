@@ -1,7 +1,7 @@
 package com.example.bankcards.controller;
 
-import com.example.bankcards.dto.AuthRequest;
-import com.example.bankcards.dto.AuthResponse;
+import com.example.bankcards.dto.AuthRequestDto;
+import com.example.bankcards.dto.AuthResponseDto;
 import com.example.bankcards.dto.UserCreateRequestDto;
 import com.example.bankcards.dto.UserResponseDto;
 import com.example.bankcards.exception.MyException;
@@ -20,7 +20,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -59,7 +58,7 @@ public class AuthController {
 			@ApiResponse(responseCode = "200", description = "Авторизация прошла успешно")
 	})
 	@PostMapping(value = "/auth/signin")
-	public AuthResponse login(@RequestBody AuthRequest request) {
+	public AuthResponseDto login(@RequestBody AuthRequestDto request) {
 		try {
 			authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(request.username(), request.password())
@@ -69,7 +68,7 @@ public class AuthController {
 		}
 
 		String token = jwtService.generateToken(request.username());
-		return new AuthResponse(token);
+		return new AuthResponseDto(token);
 	}
 
 }

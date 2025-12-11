@@ -1,5 +1,6 @@
 package com.example.bankcards.dto;
 
+import com.example.bankcards.entity.enums.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -20,5 +21,8 @@ public class UserCreateRequestDto {
 
 	@Schema(description = "Пароль пользователя")
 	private String password;
+
+	@Schema(description = "Роль пользователя")
+	private Role role;
 
 }

@@ -1,11 +1,12 @@
-package com.example.bankcards.service;
+package com.example.bankcards.service.impl;
 
 import com.example.bankcards.dto.UserCreateRequestDto;
 import com.example.bankcards.dto.UserResponseDto;
-import com.example.bankcards.entity.Role;
+import com.example.bankcards.entity.enums.Role;
 import com.example.bankcards.entity.User;
 import com.example.bankcards.mapper.UserMapper;
 import com.example.bankcards.repository.UserRepository;
+import com.example.bankcards.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
 		User newUser = User.builder()
 				.username(dto.getUsername())
 				.password(passwordEncoder.encode(dto.getPassword()))
-				.role(Role.USER)
+				.role(dto.getRole() == null ? Role.USER : dto.getRole())
 				.build();
 
 		userRepository.save(newUser);

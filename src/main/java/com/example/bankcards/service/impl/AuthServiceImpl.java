@@ -1,5 +1,6 @@
-package com.example.bankcards.service;
+package com.example.bankcards.service.impl;
 
+import com.example.bankcards.service.AuthService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

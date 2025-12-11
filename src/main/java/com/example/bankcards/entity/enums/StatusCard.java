@@ -1,4 +1,4 @@
-package com.example.bankcards.entity;
+package com.example.bankcards.entity.enums;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
@@ -6,7 +6,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum Status {
+public enum StatusCard {
 
 	@Schema(description = "Активна")
 	ACTIVE("Активна"),

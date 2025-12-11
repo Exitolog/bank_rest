@@ -24,6 +24,11 @@ server:
 jwt:
   secret: defaultSecret
   expiration: 86400
+card:
+  number:
+    encryption:
+      key: my-3-2-character-secret-key-here
+      iv: default16bytesIV
 
 Что нужно сделать:
   - Указать настройки подключения к базе данных.
