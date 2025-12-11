@@ -1,6 +1,7 @@
 #
 # application.yml — главный конфигурационный файл Spring Boot.
 
+
 spring:
   liquibase:
     change-log: classpath:db/migration/db.changelog-master.yaml
@@ -20,7 +21,7 @@ springdoc:
     enabled: true
     path: /swagger-ui.html
 server:
-  port: 0
+  port: 8080
 jwt:
   secret: defaultSecret
   expiration: 86400
@@ -29,9 +30,3 @@ card:
     encryption:
       key: my-3-2-character-secret-key-here
       iv: default16bytesIV
-
-Что нужно сделать:
-  - Указать настройки подключения к базе данных.
-  - Указать порт приложения.
-  - Настроить параметры безопасности и JWT.
-  - Включить Swagger UI.

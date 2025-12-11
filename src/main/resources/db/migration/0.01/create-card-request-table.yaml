@@ -1,0 +1,27 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1-create-card-requests-table
+      author: Belyakov Sergey
+      changes:
+        - createTable:
+            tableName: card_requests
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: UUID
+                  constraints:
+                    nullable: false
+                    foreignKeyName: user_id_fkey
+                    references: users(id)
+              - column:
+                  name: date_request
+                  type: date
+                  constraints:
+                    nullable: false
+
+

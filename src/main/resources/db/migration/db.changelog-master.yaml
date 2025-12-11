@@ -3,3 +3,7 @@ databaseChangeLog:
       file: db/migration/0.01/create-user-table.yaml
   - include:
       file: db/migration/0.01/create-card-table.yaml
+  - include:
+      file: db/migration/0.01/create-card-request-table.yaml
+  - include:
+      file: db/migration/0.01/create-transfer-table.yaml

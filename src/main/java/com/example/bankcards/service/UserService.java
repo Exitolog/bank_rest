@@ -1,9 +1,9 @@
 package com.example.bankcards.service;
 
+import com.example.bankcards.dto.PageUsersResponse;
 import com.example.bankcards.dto.UserCreateRequestDto;
 import com.example.bankcards.dto.UserResponseDto;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface UserService {
@@ -14,6 +14,6 @@ public interface UserService {
 
 	UserResponseDto findUserByUsername(String username);
 
-	List<UserResponseDto> findAllUsers();
+	PageUsersResponse findAllUsers(Integer page, Integer limit);
 
 }

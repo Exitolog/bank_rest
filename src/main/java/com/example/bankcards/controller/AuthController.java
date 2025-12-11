@@ -8,9 +8,9 @@ import com.example.bankcards.exception.MyException;
 import com.example.bankcards.security.JwtService;
 import com.example.bankcards.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -25,29 +25,18 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@Tag(name = "Auth Controller", description = "Контролер для обработки аутентификации")
 @Validated
+@Schema(description = "Контролер для обработки аутентификации")
 public class AuthController {
 
-//	private final AuthService authService;
 	private final UserService userService;
 	private final AuthenticationManager authenticationManager;
 	private final JwtService jwtService;
 
-
-//	@Operation(summary = "Эндпойнт для авторизации пользователя")
-//	@ApiResponses(value = {
-//			@ApiResponse(responseCode = "200", description = "Авторизация прошла успешно")
-//	})
-//	@PostMapping(value = "/auth/signin")
-//	public KeycloakTokenResponseDto signin(
-//			@Validated
-//			@RequestBody SigninRequestDto signinRequestDto,
-//			HttpServletResponse response
-//	) {
-//		return authService.signin(signinRequestDto, response);
-//	}
-
+	@Operation(summary = "Эндпойнт для регистрации пользователя")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "201", description = "Пользователь успешно зарегистрирован")
+	})
 	@PostMapping("/registration")
 	public UserResponseDto saveUser(@RequestBody UserCreateRequestDto dto) {
 		return userService.saveUser(dto);

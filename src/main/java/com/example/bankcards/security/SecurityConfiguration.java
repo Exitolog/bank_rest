@@ -8,7 +8,6 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,6 +31,7 @@ public class SecurityConfiguration {
 				)
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/auth/signin", "/registration").permitAll()
+						.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
 						.requestMatchers("/admin/**").hasRole("ADMIN")
 						.requestMatchers("/users/**").hasRole("USER")
 						.anyRequest().permitAll()
@@ -40,18 +40,6 @@ public class SecurityConfiguration {
 
 		return httpSecurity.build();
 	}
-
-//	@Bean
-//	public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-//		httpSecurity.csrf(CsrfConfigurer::disable)
-//				.authorizeHttpRequests(auth ->
-//						auth.requestMatchers("/users/login", "/users/registration").permitAll()
-//								.requestMatchers("/admin/**").hasRole("ADMIN")
-//								.requestMatchers("/users/**").hasRole("USER")
-//								.anyRequest().authenticated()
-//				);
-//		return httpSecurity.build();
-//	}
 
 	@Bean
 	public AuthenticationManager authenticationManager(

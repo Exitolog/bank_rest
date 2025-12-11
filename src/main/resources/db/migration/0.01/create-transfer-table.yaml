@@ -1,0 +1,33 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1-create-transfers-table
+      author: Belyakov Sergey
+      changes:
+        - createTable:
+            tableName: transfers
+            columns:
+              - column:
+                  name: id
+                  type: UUID
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: card_from
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: card_to
+                  type: varchar(16)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: amount
+                  type: decimal
+                  constraints:
+                    nullable: false
+              - column:
+                  name: created_at
+                  type: timestamp
+                  constraints:
+                    nullable: false

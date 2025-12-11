@@ -7,10 +7,12 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Entity
@@ -18,6 +20,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Table(name = "transfers")
 @Schema(description = "Сущность перевода средств между картами")
+@Builder
 public class TransferEntity implements Serializable {
 
 	@Id
@@ -33,5 +36,8 @@ public class TransferEntity implements Serializable {
 
 	@Schema(description = "Сумма перевода")
 	private BigDecimal amount;
+
+	@Schema(description = "Дата и время перевода")
+	private LocalDateTime createdAt;
 
 }

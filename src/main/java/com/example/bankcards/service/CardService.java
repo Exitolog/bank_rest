@@ -1,5 +1,6 @@
 package com.example.bankcards.service;
 
+import com.example.bankcards.dto.BalanceCardResponseDto;
 import com.example.bankcards.dto.CardResponse;
 import com.example.bankcards.dto.PageCardsResponse;
 import com.example.bankcards.entity.enums.StatusCard;
@@ -8,9 +9,9 @@ import java.util.UUID;
 
 public interface CardService {
 
-	CardResponse createCard(UUID userId);
+	CardResponse createCard(UUID userId, UUID requestId);
 
-	CardResponse findCardByCardNumber(String cardNumber);
+	BalanceCardResponseDto findBalanceByCardNumber(String cardNumber);
 
 	CardResponse findCardById(UUID id);
 
@@ -18,5 +19,7 @@ public interface CardService {
 
 	CardResponse changeCardStatus(UUID id, StatusCard statusCard);
 
-	PageCardsResponse findMyCars(Integer page, Integer limot);
+	PageCardsResponse findMyCards(Integer page, Integer limot);
+
+
 }

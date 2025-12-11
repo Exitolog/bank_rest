@@ -1,5 +1,6 @@
 package com.example.bankcards.service.impl;
 
+import com.example.bankcards.dto.PageUsersResponse;
 import com.example.bankcards.dto.UserCreateRequestDto;
 import com.example.bankcards.dto.UserResponseDto;
 import com.example.bankcards.entity.enums.Role;
@@ -8,10 +9,12 @@ import com.example.bankcards.mapper.UserMapper;
 import com.example.bankcards.repository.UserRepository;
 import com.example.bankcards.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -54,10 +57,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public List<UserResponseDto> findAllUsers() {
-		return userRepository.findAll()
-				.stream()
-				.map(USER_MAPPER::toUserResponseDTO)
-				.toList();
+	public PageUsersResponse findAllUsers(Integer page, Integer limit) {
+
+		Pageable pageable = PageRequest.of(page - 1, limit);
+
+		Page<User> userPage = userRepository.findAll(pageable);
+
+		return PageUsersResponse.builder()
+				.totalPages(userPage.getTotalPages())
+				.totalElements(userPage.getTotalElements())
+				.users(userPage.stream().map(USER_MAPPER::toUserResponseDTO).toList())
+				.build();
 	}
 }
