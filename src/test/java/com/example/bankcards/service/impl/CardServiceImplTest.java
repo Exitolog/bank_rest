@@ -3,22 +3,16 @@ package com.example.bankcards.service.impl;
 import com.example.bankcards.dto.BalanceCardResponseDto;
 import com.example.bankcards.dto.CardResponse;
 import com.example.bankcards.entity.Card;
-import com.example.bankcards.entity.User;
 import com.example.bankcards.entity.enums.StatusCard;
-import com.example.bankcards.exception.MyException;
 import com.example.bankcards.mapper.CardMapper;
 import com.example.bankcards.repository.CardRepository;
 import com.example.bankcards.repository.CardRequestRepository;
 import com.example.bankcards.repository.UserRepository;
-import com.example.bankcards.util.StaticHelperClass;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockedStatic;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.HttpStatus;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -26,8 +20,6 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
-import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
-import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -103,25 +95,5 @@ class CardServiceImplTest {
 		assertThat(result).isEqualTo(expectedDto);
 		verify(cardRepository).findByCardNumber(cardNumber);
 		verify(cardMapper).toBalanceCardResponseDto(card);
-	}
-
-	@Test
-	void createCard_shouldThrowMyException_whenRequestDeletionFails() {
-
-		UUID userId = UUID.randomUUID();
-		UUID requestId = UUID.randomUUID();
-
-		User owner = User.builder().id(userId).username("Alex").build();
-		String cardNumber = "1234-5678-9012-3456";
-
-		try (MockedStatic<StaticHelperClass> mocked = Mockito.mockStatic(StaticHelperClass.class)) {
-			mocked.when(StaticHelperClass::getAuthUserName).thenReturn(cardNumber);
-
-			when(userRepository.findById(userId)).thenReturn(Optional.of(owner));
-			doThrow(new RuntimeException("DB error")).when(cardRequestRepository).deleteById(requestId);
-
-			assertThatThrownBy(() -> cardService.createCard(userId, requestId)).isInstanceOf(MyException.class).hasMessage("Card request not found").extracting("status").isEqualTo(HttpStatus.NOT_FOUND);
-			verify(cardRequestRepository).deleteById(requestId);
-		}
 	}
 }

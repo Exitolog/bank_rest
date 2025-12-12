@@ -32,4 +32,6 @@ public interface CardRepository extends JpaRepository<Card, UUID> {
 			@Param("username") String username,
 			Pageable pageable);
 
+	Page<Card> findAll(Pageable pageable);
+
 }

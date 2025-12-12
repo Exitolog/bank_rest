@@ -32,9 +32,9 @@ public class SecurityConfiguration {
 				.authorizeHttpRequests(auth -> auth
 						.requestMatchers("/auth/signin", "/registration").permitAll()
 						.requestMatchers("/swagger-ui/**", "/v3/api-docs/**", "/swagger-resources/**", "/webjars/**").permitAll()
-						.requestMatchers("/admin/**").hasRole("ADMIN")
-						.requestMatchers("/users/**").hasRole("USER")
-						.anyRequest().permitAll()
+						.requestMatchers("*/admin/**").hasRole("ADMIN")
+						.requestMatchers("/users/**").hasRole("ADMIN")
+						.anyRequest().authenticated()
 				)
 				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

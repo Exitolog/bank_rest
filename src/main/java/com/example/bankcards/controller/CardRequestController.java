@@ -38,7 +38,7 @@ public class CardRequestController {
 	@Operation(summary = "Получение запроса на выпуск карты по id")
 	@ApiResponses(@ApiResponse(responseCode = "200", description = "Получен запрос нв выпуск карты",
 			content = @Content(schema = @Schema(implementation = CardRequestResponseDto.class))))
-	@GetMapping("/{id}")
+	@GetMapping("/admin/{id}")
 	public CardRequestResponseDto findCardRequestById(@PathVariable("id") UUID id) {
 		return cardRequestService.findCardRequestById(id);
 	}
@@ -46,7 +46,7 @@ public class CardRequestController {
 	@Operation(summary = "Получение всех запросов на выпуск карты")
 	@ApiResponses(@ApiResponse(responseCode = "200", description = "Получены все запросы нв выпуск карты",
 			content = @Content(schema = @Schema(implementation = PageCardRequestResponseDto.class))))
-	@GetMapping("/all")
+	@GetMapping("/admin/all")
 	public PageCardRequestResponseDto findAllCardRequest(
 			@RequestParam(required = false, defaultValue = "1" ) Integer page,
 			@RequestParam(required = false, defaultValue = "3" ) Integer limit) {

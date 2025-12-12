@@ -17,6 +17,8 @@ public interface CardService {
 
 	void deleteCartById(UUID id);
 
+	PageCardsResponse findAllCards(Integer page, Integer limit);
+
 	CardResponse changeCardStatus(UUID id, StatusCard statusCard);
 
 	PageCardsResponse findMyCards(Integer page, Integer limot);

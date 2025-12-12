@@ -75,8 +75,18 @@ public class CardServiceImpl implements CardService {
 	@Override
 	@Transactional
 	public BalanceCardResponseDto findBalanceByCardNumber(String cardNumber) {
-		return CARD_MAPPER.toBalanceCardResponseDto(cardRepository.findByCardNumber(cardNumber)
-				.orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, "Card not found")));
+
+		Card card = cardRepository.findByCardNumber(cardNumber)
+				.orElseThrow(() -> new MyException(HttpStatus.NOT_FOUND, "Card not found"));
+
+		String userAuth = StaticHelperClass.getAuthUserName();
+
+		if(!card.getOwner().getUsername().equals(userAuth)) {
+			throw new MyException(HttpStatus.FORBIDDEN, "Access denied");
+		}
+
+		return CARD_MAPPER.toBalanceCardResponseDto(card);
+
 	}
 
 	@Override
@@ -89,6 +99,20 @@ public class CardServiceImpl implements CardService {
 	@Transactional
 	public void deleteCartById(UUID id) {
 		cardRepository.deleteById(id);
+	}
+
+	@Override
+	@Transactional
+	public PageCardsResponse findAllCards(Integer page, Integer limit) {
+		Pageable pageable = PageRequest.of(page - 1, limit);
+
+		Page<Card> cardPage = cardRepository.findAll(pageable);
+
+		return PageCardsResponse.builder()
+				.totalPages(cardPage.getTotalPages())
+				.totalElements(cardPage.getTotalElements())
+				.cards(cardPage.stream().map(CARD_MAPPER::toCardResponse).toList())
+				.build();
 	}
 
 	@Override

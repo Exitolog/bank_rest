@@ -78,6 +78,16 @@ public class CardController {
 		return cardService.findMyCards(page, limit);
 	}
 
+	@Operation(summary = "Получение всех карт администратором")
+	@ApiResponses(@ApiResponse(responseCode = "200", description = "Получены все карты в системе",
+			content = @Content(schema = @Schema(implementation = PageCardsResponse.class))))
+	@GetMapping("/admin/allCards")
+	public PageCardsResponse findAllCards(
+			@RequestParam(defaultValue = "1", required = false, name = "page") Integer page,
+			@RequestParam(defaultValue = "3", required = false, name = "limit") Integer limit) {
+		return cardService.findAllCards(page, limit);
+	}
+
 	@Operation(summary = "Удаление карты по id")
 	@ApiResponses(@ApiResponse(responseCode = "204", description = "Карта успешно удалена"))
 	@DeleteMapping("/{id}")
